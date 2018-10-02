@@ -1,0 +1,28 @@
+---
+
+- name: webappdeployer | retrieve application from git
+  git: repo={{ item.repo }} dest={{ webapps_home }}/{{ item.name }}
+  with_items: "{{ webapps_git }}"
+
+- name: webappdeployer | deploy custom configurations
+  copy: src={{ item.1.src }} dest={{ item.1.dest }}
+  with_subelements:
+    - "{{ webapps_git }}"
+    - configurations
+
+- name: webappdeployer | ensure path are present
+  file: path={{ webapps_home }}/{{ item.dest }} state=directory
+  with_items: "{{ webapps_zip }}"
+
+- name: webappdeployer | retrieve application from static sources
+  unarchive: remote_src=yes src={{ item.source }} dest={{ webapps_home }}/{{ item.dest }}
+  with_items: "{{ webapps_zip }}"
+
+- name: webappdeployer | deploy custom configurations
+  copy: src={{ item.1.src }} dest={{ item.1.dest }}
+  with_subelements:
+    - "{{ webapps_zip }}"
+    - configurations
+
+- name: webappdeployer | set webapp home ownership
+  file: path={{ webapps_home }} owner={{ webapps_user }} group={{ webapps_group }} state=directory recurse=yes

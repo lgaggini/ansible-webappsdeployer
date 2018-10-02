@@ -1,0 +1,25 @@
+---
+# webapp user and group to run and install webapps
+webapps_user: www-data
+webapps_group: www-data
+
+# web home
+webapps_home: /srv/www
+
+# git apps to be deployed
+webapps_git:
+  - name: my_project
+    repo: my_repo_url
+    configurations:
+      - src: myconfig.cfg
+        dest: ./
+
+# archive apps to be deployed
+webapps_zip:
+  - name: my_project
+    source: my_archive_url
+    dest: my_archive_subpath
+    configurations:
+      - src: myconfig.cfg
+        dest: ./
+
