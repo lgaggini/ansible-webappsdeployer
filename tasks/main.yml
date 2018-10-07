@@ -1,7 +1,7 @@
 ---
 
 - name: webappdeployer | retrieve application from git
-  git: repo={{ item.repo }} dest={{ webapps_home }}/{{ item.name }}
+  git: repo={{ item.repo }} dest={{ webapps_home }}/{{ item.name }} update={{ item.repo_update }}
   with_items: "{{ webapps_git }}"
 
 - name: webappdeployer | deploy custom configurations

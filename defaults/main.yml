@@ -13,6 +13,7 @@ webapps_git:
     configurations:
       - src: myconfig.cfg
         dest: ./
+    repo_update: yes
 
 # archive apps to be deployed
 webapps_zip:
